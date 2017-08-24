@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>s.html</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+    <script type="text/javascript" src="angular.min.js"></script>
+  </head>
+  
+  <body>
+   <table ng-app="searchApp" ng-controller="searchController">
+    <caption>我的购物车</caption>
+    <tr>
+        <th>序号</th>
+        <th>商品</th>
+        <th>单价</th>
+        <th>数量</th>
+        <th>金额</th>
+        <th>操作</th>
+    </tr>
+    <tr ng-repeat="item in items">
+        <td>{{$index + 1}}</td>
+        <td>{{item.name}}</td>
+        <td>{{item.price | currency}}</td>
+        <td><input ng-model="item.quantity"></td>
+        <td>{{item.quantity * item.price | currency}}</td>
+        <td>
+            <button ng-click="remove($index)">Remove</button>
+        </td>
+    </tr>
+</table>
+
+<script>
+
+     var searchApp=angular.module("searchApp",[]);
+     searchApp.controller("searchController",function($scope,$http){
+        $scope.items = [
+            {name: "<font color=red>雷柏（Rapoo） V500 机械游戏键盘 机械黄轴</font>", quantity: 1, price: 199.00},
+            {name: "雷柏（Rapoo） V20 光学游戏鼠标 黑色烈焰版", quantity: 1, price: 139.00},
+            {name: "AngularJS权威教程", quantity: 2, price: 84.20}
+        ];
+
+        $scope.remove = function (index) {
+            $scope.items.splice(index, 1);
+        }
+    });
+</script>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>s.html</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+    <script type="text/javascript" src="angular.min.js"></script>
+  </head>
+  
+  <body>
+     <div ng-app="searchApp" ng-controller="searchController">
+         <form name="ff" method="post" action="#">
+	    	<table cellpadding="5">
+	    		<tr>
+	    			<td>名称:</td>
+	    			<td><input class="easyui-textbox" type="text" name="name" required></input></td>
+	    		</tr>
+	    		<tr>
+	    			<td>邮件:</td>
+	    			<td><input class="easyui-textbox" type="text" ng-model="email" name="email" email></input>
+	    			   <span ng-show="ff.email.$invalid">邮件格式错误</span>
+	    			</td>
+	    		</tr>
+	    		<tr>
+	    			<td>日期:</td>
+	    			<td><input class="easyui-textbox" type="text" name="subject" ng-model="subject" ></input></td>
+	    		</tr>
+	    		<tr>
+	    			<td>消息:</td>
+	    			<td><input class="easyui-textbox" name="message" style="height:60px"></input></td>
+	    		</tr>
+	    		<tr>
+	    			<td>语言:</td>
+	    			<td>
+	    				<select class="easyui-combobox" name="language"><option value="ar">Arabic</option><option value="bg">Bulgarian</option><option value="ca">Catalan</option><option value="zh-cht">Chinese Traditional</option><option value="cs">Czech</option><option value="da">Danish</option><option value="nl">Dutch</option><option value="en" selected="selected">English</option><option value="et">Estonian</option><option value="fi">Finnish</option><option value="fr">French</option><option value="de">German</option><option value="el">Greek</option><option value="ht">Haitian Creole</option><option value="he">Hebrew</option><option value="hi">Hindi</option><option value="mww">Hmong Daw</option><option value="hu">Hungarian</option><option value="id">Indonesian</option><option value="it">Italian</option><option value="ja">Japanese</option><option value="ko">Korean</option><option value="lv">Latvian</option><option value="lt">Lithuanian</option><option value="no">Norwegian</option><option value="fa">Persian</option><option value="pl">Polish</option><option value="pt">Portuguese</option><option value="ro">Romanian</option><option value="ru">Russian</option><option value="sk">Slovak</option><option value="sl">Slovenian</option><option value="es">Spanish</option><option value="sv">Swedish</option><option value="th">Thai</option><option value="tr">Turkish</option><option value="uk">Ukrainian</option><option value="vi">Vietnamese</option></select>
+	    			</td>
+	    		</tr>
+	    	</table>
+	    	<input type="submit" ng-disabled="ff.$invalid" value="提交">
+	    </form>
+     </div>
+  </body>
+  <script type="text/javascript">
+     var searchApp=angular.module("searchApp",[]);
+     searchApp.controller("searchController",function($scope,$http,$sce){
+         $scope.search=function(){
+            $http({
+               method:"GET",
+               url:"search?key="+$scope.key
+            }).then(function(res){
+                var d=res.data;
+                $scope.searchData=d;
+            },function(res){
+                alert("查询失败"+res.status+"-"+res.statusText);
+            });
+         }
+     })
+     //定义验证指令  
+     searchApp.directive("email",function(){
+     	return {
+     		restrict:'A',  //A表示作为属性使用   E 作为元素名使用
+     		template:'<font color=red>饺子{{i}}</font>',  //如果标签使用了template表示该标签会添加template指定内容
+     	}
+     })
+  </script>
+</html>
